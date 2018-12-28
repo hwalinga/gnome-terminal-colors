@@ -25,6 +25,8 @@ retrieve_color-theme_dconf() {
     done
   fi
 
+  PROFILE_NAME_SLUG=${PROFILE_NAME// /-}
+
   palette="`$DCONF read $PROFILE_KEY/palette | tr -d \'`"
   bg_color="`$DCONF read $PROFILE_KEY/background-color | tr -d \'`"
   fg_color="`$DCONF read $PROFILE_KEY/foreground-color | tr -d \'`"

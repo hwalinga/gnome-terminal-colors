@@ -10,8 +10,8 @@ import_color_theme() {
       rm "$dir/colors/$PROFILE_NAME_SLUG/*"
       break
     fi
-    while [[ $PROFILE_NAME_SLUG = *[$' \t\n']* ]]; do 
-      echo "$PROFILE_NAME_SLUG cannot contain whitespace."
+    while [[ $PROFILE_NAME_SLUG = "" || $PROFILE_NAME_SLUG = *[$' \t\n']* ]]; do 
+      echo "$PROFILE_NAME_SLUG cannot contain whitespace, or be an empty string."
       echo -n "Provide an alternative: "
       read PROFILE_NAME_SLUG
     done
@@ -19,10 +19,10 @@ import_color_theme() {
   target="$dir/colors/$PROFILE_NAME_SLUG"
   mkdir -p "$target"
   
-  echo -e ${palette//:/\\n} >> $target/palette
-  echo $bg_color >> $target/bg_color
-  echo $fg_color >> $target/fg_color
-  echo $bd_color >> $target/bd_color
+  echo -e ${palette//:/\\n} > $target/palette
+  echo $bg_color > $target/bg_color
+  echo $fg_color > $target/fg_color
+  echo $bd_color > $target/bd_color
   
 }
 
