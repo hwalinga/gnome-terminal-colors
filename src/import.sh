@@ -7,8 +7,10 @@ import_color_theme() {
     echo -n "(y to continue, or type alternative) "
     read confirmation
     if [[ $confirmation = y ]]; then
-      rm "$dir/colors/$PROFILE_NAME_SLUG/*"
+      rm "$dir/colors/$PROFILE_NAME_SLUG/"*
       break
+    else 
+      PROFILE_NAME_SLUG=$confirmation
     fi
     while [[ $PROFILE_NAME_SLUG = "" || $PROFILE_NAME_SLUG = *[$' \t\n']* ]]; do 
       echo "$PROFILE_NAME_SLUG cannot contain whitespace, or be an empty string."
