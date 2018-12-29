@@ -151,7 +151,27 @@ Prerequisites: a working ruby installation with the `nokogiri-plist` ruby gem
 
 Example call:
 
-`tools/import_from_iterm.rb my_iterm_colorscheme.itermcolors my_iterm_colorscheme`
+`import_tools/import_from_iterm.rb my_iterm_colorscheme.itermcolors my_iterm_colorscheme`
+
+Syncing guake and gnome-terminal
+-------------------------------
+
+If you also use guake as your drop down terminal next to gnome-terminal, you 
+can sync the the color scheme using some scripts from this repo. 
+
+Run the script export_tools/export_to_guake.sh to export any color scheme from 
+the colors directory to guake. 
+
+Additionally, if you imported a colorscheme to gnome-terminal from a different 
+project than this one (like 
+https://github.com/aaron-williamson/base16-gnome-terminal, you can create a 
+color scheme from one of your profiles in gnome-terminal and export it to 
+guake. 
+
+The reverse is also possible, if you like one of the many default profiles 
+guake comes with. 
+
+These tools can be found in the import_tools folder.
 
 Contributors
 ------------
