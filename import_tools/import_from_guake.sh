@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+current_dir=$(dirname "$0")
+dir=$(dirname "$current_dir")
 [[ -z "$GCONFTOOL" ]] && GCONFTOOL=gconftool-2
 [[ -z "$BASE_KEY" ]] && BASE_KEY=/apps/guake/style
 
@@ -16,7 +18,7 @@ remove_hex_repetition() { # { #2e2e34343636 -> #2e3436 } I also don't know why G
 remove_hex_repetition_palette() {
   colors=()
   for color in ${1//:/ }; do 
-    colors+=('$(remove_hex_repetition $color)')
+    colors+=($(remove_hex_repetition $color))
   done
   colors_string="${colors[@]}"
   echo "${colors_string// /:}"
@@ -24,8 +26,8 @@ remove_hex_repetition_palette() {
     
 PROFILE_NAME_SLUG=$(gget "font/palette_name")
 palette=$(remove_hex_repetition_palette $(gget "font/palette"))
-bg_color=$(gget "background/color")
-fg_color=$(gget "font/color")
+bg_color=$(remove_hex_repetition $(gget "background/color"))
+fg_color=$(remove_hex_repetition $(gget "font/color"))
 bd_color=$fg_color
 
 import_color_theme

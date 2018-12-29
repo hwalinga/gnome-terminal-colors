@@ -8,6 +8,17 @@ dir=$(dirname "$current_dir")
 source $dir/src/tools.sh
 source $dir/src/import.sh
 
+check_rgb() {
+  inp="$1"
+  if [ "${inp:0:1}" = "r" ]; then
+    inp=${inp:4:${#inp}-5}
+    eval "inp=(${inp//,/ })"
+    printf "#%02X%02X%02X\n" "${inp[@]}"
+  else
+    echo "$inp"
+  fi
+}
+
 hex-string_to_hex-line() {
   echo "${palette//, /:}"
 }
@@ -16,7 +27,7 @@ rgb-string_to_hex-line() {
   palette=$(tr -d "[:alpha:]()" <<< $palette)
   eval "palette=(${palette//, / })" # compatible array decleration for zsh and bash
   colors=()
-  for color in $palette; do 
+  for color in ${palette[@]}; do 
     eval "values=(${color//,/ })"
     hex_color=$(printf \#%02X%02X%02X "${values[@]}") # convert to hex
     colors+=($hex_color) 
@@ -57,9 +68,9 @@ retrieve_color-theme_dconf() {
   PROFILE_NAME_SLUG=${PROFILE_NAME// /-}
 
   palette="`$DCONF read $PROFILE_KEY/palette | tr -d \'`"
-  bg_color="`$DCONF read $PROFILE_KEY/background-color | tr -d \'`"
-  fg_color="`$DCONF read $PROFILE_KEY/foreground-color | tr -d \'`"
-  bd_color="`$DCONF read $PROFILE_KEY/bold-color | tr -d \'`"
+  bg_color=$(check_rgb "`$DCONF read $PROFILE_KEY/background-color | tr -d \'`")
+  fg_color=$(check_rgb "`$DCONF read $PROFILE_KEY/foreground-color | tr -d \'`")
+  bd_color=$(check_rgb "`$DCONF read $PROFILE_KEY/bold-color | tr -d \'`")
 
 
   if [[ "${palette:0:1}" == "[" ]]; then # rgb notation
