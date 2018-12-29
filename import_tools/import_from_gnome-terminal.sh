@@ -8,9 +8,11 @@ dir=$(dirname "$current_dir")
 source $dir/src/tools.sh
 source $dir/src/import.sh
 
-rgb-string_to_hex-string() {
-  palette="$1"
-  palette=${palette:1:${#palette}-2} # remove [...]
+hex-string_to_hex-line() {
+  echo "${palette//, /:}"
+}
+
+rgb-string_to_hex-line() {
   palette=$(tr -d "[:alpha:]()" <<< $palette)
   eval "palette=(${palette//, / })" # compatible array decleration for zsh and bash
   colors=()
@@ -21,6 +23,17 @@ rgb-string_to_hex-string() {
   done
   colors_string="${colors[@]}"
   echo "${colors_string// /:}"
+}
+
+array-string_to_hex-string() {
+  palette="$1"
+  palette=${palette:1:${#palette}-2} # remove [...]
+  if [[ "${palette:0:1}" = "r" ]]; then
+    palette=$(rgb-string_to_hex-line "$palette")
+  else
+    palette=$(hex-string_to_hex-line "$palette")
+  fi
+  echo "$palette"
 }
 
 retrieve_color-theme_dconf() {
@@ -50,9 +63,7 @@ retrieve_color-theme_dconf() {
 
 
   if [[ "${palette:0:1}" == "[" ]]; then # rgb notation
-    echo "$palette"
-    palette=$(rgb-string_to_hex-string "$palette")
-    echo "$palette"
+    palette=$(array-string_to_hex-string "$palette")
   fi
 
   import_color_theme 
