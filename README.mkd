@@ -173,6 +173,10 @@ guake comes with.
 
 These tools can be found in the import_tools folder.
 
+BUG: Sometimes the colorscheme present in gnome-terminal menu is not equal to 
+the one present in the registry. Changing a color from the palette refreshes
+this so that the import tool will import the correct colors.
+
 Contributors
 ------------
 
