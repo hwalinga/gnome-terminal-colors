@@ -157,7 +157,7 @@ Syncing guake and gnome-terminal
 -------------------------------
 
 If you also use guake as your drop down terminal next to gnome-terminal, you 
-can sync the the color scheme using some scripts from this repo. 
+can sync the color scheme using some scripts from this repo. 
 
 Run the script export_tools/export_to_guake.sh to export any color scheme from 
 the colors directory to guake. 
